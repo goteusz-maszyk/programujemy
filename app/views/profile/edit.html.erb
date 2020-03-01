@@ -1,0 +1,42 @@
+<%= form_tag profile_url, method: :put do %>
+  <h4>Edytuj Profil</h4>
+
+  <div class="border p-4 mb-4">
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= text_field_tag :"user[username]", @user.username, placeholder: "Nazwa Użytkownika", class: "form-control #{error_message_class(@user, :username)} was-validated" %>
+        <div class="invalid-feedback"><%= ErrorsHelper::ERROR_FORM_MESSAGE %></div>
+        <div class="valid-feedback"><%= ErrorsHelper::SUCCESS_FORM_MESSAGE %></div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= email_field_tag :"user[email]", @user.email, placeholder: "E-Mail", class: "form-control #{error_message_class(@user, :email)}" %>
+        <div class="invalid-feedback"><%= ErrorsHelper::ERROR_FORM_MESSAGE %></div>
+        <div class="valid-feedback"><%= ErrorsHelper::SUCCESS_FORM_MESSAGE %></div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= password_field_tag :"user[password]", @user.password, placeholder: "(nowe) Hasło (min. 8 znaków)", class: "form-control #{error_message_class(@user, :password)}" %>
+        <div class="invalid-feedback"><%= ErrorsHelper::ERROR_FORM_MESSAGE %></div>
+        <div class="valid-feedback"><%= ErrorsHelper::SUCCESS_FORM_MESSAGE %></div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= password_field_tag :"user[password_confirmation]", @user.password_confirmation, placeholder: "Potwierdź (nowe) hasło", class: "form-control #{error_message_class(@user, :password_confirmation)}" %>
+        <div class="invalid-feedback"><%= ErrorsHelper::ERROR_FORM_MESSAGE %> Upewnij się, że dobrze powtórzyłeś/aś hasło.</div>
+        <div class="valid-feedback"><%= ErrorsHelper::SUCCESS_FORM_MESSAGE %></div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= text_area_tag :"user[description]", @user.description, placeholder: "Twój opis", class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <%= submit_tag 'Zapisz', class: "btn btn-outline-primary" %>
+<% end %>
+<%= link_to 'Usuń konto', '', class: "btn btn-outline-danger", data: { toggle: 'modal', target: '#del-account', href: user_registration_url } %>
+<%= render partial: "/shared/modal", locals: {method: "delete", modal_id: "del-account", title: "Na pewno?", body: "Usuniętego konta nie można usunąć."} %>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= @title %> Programujemy</title>
+    <%= csrf_meta_tags %>
+
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/">Programujemy</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <% if user_signed_in? %>
+            <li class="nav-item <%= active_class(:"users/registrations", :edit) %>">
+              <%= link_to 'Edytuj Profil', edit_user_registration_path, class: 'nav-link' %>
+            </li>
+            <% if current_user.admin? %>
+              <li class="nav-item <%= active_class(:"admin/users", :index) %>">
+                <%= link_to 'Użytkownicy', admin_users_url, class: 'nav-link' %>
+              </li>
+            <% end %>
+          <% else %>
+            <li class="nav-item <%= active_class(:"users/sessions", :new) %>">
+              <%= link_to "Zaloguj Się", zaloguj_url, class: 'nav-link'  %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+    <p class="navbar-text pull-right">
+      <% if user_signed_in? %>
+        Zalogowany Jako <strong><%= current_user.username %> (<%= current_user.email %>)</strong>.
+        <%= link_to "Wyloguj", destroy_user_session_path, :class => 'navbar-link'  %>
+      <% end %>
+    </p>
+    <% if notice %>
+      <p class="alert alert-success">
+        <%= notice %>
+        <button type="button" class="close" data-dismiss="alert">
+          <span>&times;</span>
+        </button>
+      </p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger">
+        <%= alert %>
+        <button type="button" class="close" data-dismiss="alert">
+          <span>&times;</span>
+        </button>
+      </p>
+    <% end %>
+    <div class="container mt-4 mb-4">
+      <%= yield %>
+    </div>
+    <div>
+      <i>&copy by Goteusz Maszyk 2020</i>
+    </div>
+  </body>
+</html>
