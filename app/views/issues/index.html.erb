@@ -1,0 +1,19 @@
+<h4>Issues</h4>
+
+<%= link_to "Add issue", new_issue_url %>
+
+<% if @issues.present? %>
+  <ul class='list-group'>
+    <% @issues.each do |issue| %>
+      <li class='list-group-item d-flex justify-content-between align-items-center'>
+        <%= issue.user.username %> has problem:
+        <%= issue.title %>
+        <span>
+          <%= link_to "More...", issue_url(id: issue.id) %> |
+          <%= link_to 'Delete', '', data: { toggle: 'modal', target: '#del-issue', href: issue_url(issue) } %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+<%= render partial: "/shared/modal", locals: {method: "delete", modal_id: "del-issue", title: "Are you sure?", body: "You are going to remove issue"} %>

@@ -1,0 +1,16 @@
+<h4>New issue</h4>
+<%= form_tag issues_url, method: :post do %>
+  <div class="border p-4 mb-4">
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= text_field_tag :"issue[title]", @issue.title, placeholder: "Title", class: "form-control" %>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-10">
+        <%= text_area_tag :"issue[issue]", @issue.issue, placeholder: "Your problem...", class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <%= submit_tag 'Save', class: "btn btn-outline-primary" %>
+<% end %>
